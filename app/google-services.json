@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "334235628358",
+    "project_id": "pong-for-the-glyph-matrix",
+    "storage_bucket": "pong-for-the-glyph-matrix.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334235628358:android:b165d1e233831625e1ab47",
+        "android_client_info": {
+          "package_name": "com.thomasp.pong"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAGV0pjBl1dxmTnj4tyojwVppsH10ZPDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
