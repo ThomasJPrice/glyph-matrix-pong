@@ -24,12 +24,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.Image
+import androidx.activity.compose.BackHandler
+import androidx.compose.ui.text.style.TextAlign
 import com.thomasp.pong.ui.theme.PongTypography
+import com.thomasp.pong.api.LeaderboardService
+import com.thomasp.pong.data.UserPreferences
+import com.thomasp.pong.ui.LeaderboardScreen
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    private lateinit var leaderboardService: LeaderboardService
+    private lateinit var userPreferences: UserPreferences
+    private val mainScope = MainScope()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        leaderboardService = LeaderboardService(this)
+        userPreferences = UserPreferences(this)
         enableEdgeToEdge()
+
+        // Initialize username in background (no dialog, no loading screen)
+        mainScope.launch {
+            leaderboardService.ensureUsername()
+        }
+
         setContent {
             MaterialTheme(
                 colorScheme = darkColorScheme(
@@ -46,7 +65,23 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    var showLeaderboard by remember { mutableStateOf(false) }
+
+                    // Handle system back button
+                    BackHandler(enabled = showLeaderboard) {
+                        showLeaderboard = false
+                    }
+
+                    if (showLeaderboard) {
+                        LeaderboardScreen(
+                            leaderboardService = leaderboardService,
+                            onBack = { showLeaderboard = false }
+                        )
+                    } else {
+                        MainScreen(
+                            onLeaderboardClick = { showLeaderboard = true }
+                        )
+                    }
                 }
             }
         }
@@ -63,7 +98,10 @@ class PongSettings {
 }
 
 @Composable
-fun MainScreen(modifier: Modifier = Modifier) {
+fun MainScreen(
+    modifier: Modifier = Modifier,
+    onLeaderboardClick: () -> Unit = {}
+) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter
@@ -90,11 +128,18 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 modifier = Modifier.size(200.dp)
             )
 
+            // Buttons section
+            Button(
+                onClick = onLeaderboardClick,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Leaderboard")
+            }
+
             // Settings List
             Surface(
                 modifier = Modifier.fillMaxWidth(),
                 color = MaterialTheme.colorScheme.surface,
-//            tonalElevation = 2.dp,
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Column(
@@ -263,10 +308,12 @@ fun MainScreen(modifier: Modifier = Modifier) {
 
             // Attribution
             Text(
-                text = "Made by Thomas",
+                text = "v1.1\n" +
+                        "Made by Thomas",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.Gray,
-                modifier = Modifier.padding(top = 8.dp, bottom = 24.dp)
+                modifier = Modifier.padding(bottom = 24.dp).fillMaxWidth(),
+                textAlign = TextAlign.Center
             )
         }
     }
