@@ -1,4 +1,4 @@
-package com.thomasp.pong.api
+package com.thomasjprice.pong.api
 
 import okhttp3.ResponseBody
 import retrofit2.Response

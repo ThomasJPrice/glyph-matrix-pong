@@ -1,4 +1,4 @@
-package com.thomasp.pong
+package com.thomasjprice.pong
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -26,10 +26,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.Image
 import androidx.activity.compose.BackHandler
 import androidx.compose.ui.text.style.TextAlign
-import com.thomasp.pong.ui.theme.PongTypography
-import com.thomasp.pong.api.LeaderboardService
-import com.thomasp.pong.data.UserPreferences
-import com.thomasp.pong.ui.LeaderboardScreen
+import com.thomasjprice.pong.ui.theme.PongTypography
+import com.thomasjprice.pong.api.LeaderboardService
+import com.thomasjprice.pong.data.UserPreferences
+import com.thomasjprice.pong.ui.LeaderboardScreen
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 

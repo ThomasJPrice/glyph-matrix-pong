@@ -1,4 +1,4 @@
-package com.thomasp.pong.ui
+package com.thomasjprice.pong.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -23,8 +23,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.thomasp.pong.api.LeaderboardResponse
-import com.thomasp.pong.api.LeaderboardService
+import com.thomasjprice.pong.api.LeaderboardResponse
+import com.thomasjprice.pong.api.LeaderboardService
 import kotlinx.coroutines.*
 
 @OptIn(ExperimentalMaterial3Api::class)

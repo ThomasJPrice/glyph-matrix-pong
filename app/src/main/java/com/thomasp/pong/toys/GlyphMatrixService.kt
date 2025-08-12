@@ -1,4 +1,4 @@
-package com.thomasp.pong.toys
+package com.thomasjprice.pong.toys
 
 import android.app.Service
 import android.content.ComponentName

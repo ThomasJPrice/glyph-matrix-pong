@@ -5,17 +5,19 @@ plugins {
 }
 
 android {
-    namespace = "com.thomasp.pong"
+    namespace = "com.thomasjprice.pong"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.thomasp.pong"
+        applicationId = "com.thomasjprice.pong"
         minSdk = 34
         targetSdk = 35
         versionCode = 2
         versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_SECRET", "\"${project.findProperty("API_SECRET") ?: ""}\"")
     }
 
     buildTypes {
@@ -36,6 +38,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -53,6 +56,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

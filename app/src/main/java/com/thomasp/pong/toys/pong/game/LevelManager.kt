@@ -1,8 +1,8 @@
-package com.thomasp.pong.toys.pong.game
+package com.thomasjprice.pong.toys.pong.game
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.thomasp.pong.api.LeaderboardService
+import com.thomasjprice.pong.api.LeaderboardService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

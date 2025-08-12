@@ -1,4 +1,4 @@
-package com.thomasp.pong.data
+package com.thomasjprice.pong.data
 
 import android.content.Context
 import android.content.SharedPreferences

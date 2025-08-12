@@ -1,4 +1,4 @@
-package com.thomasp.pong.toys.pong
+package com.thomasjprice.pong.toys.pong
 
 import android.content.Context
 import android.hardware.Sensor
@@ -9,14 +9,14 @@ import android.media.AudioAttributes
 import android.media.SoundPool
 import android.os.VibrationEffect
 import android.os.Vibrator
-import com.thomasp.pong.PongSettings
-import com.thomasp.pong.R
-import com.thomasp.pong.toys.GlyphMatrixService
+import com.thomasjprice.pong.PongSettings
+import com.thomasjprice.pong.R
+import com.thomasjprice.pong.toys.GlyphMatrixService
 import com.nothing.ketchum.GlyphMatrixManager
 import com.nothing.ketchum.GlyphMatrixFrame
 import com.nothing.ketchum.GlyphMatrixObject
-import com.thomasp.pong.toys.pong.game.GameState
-import com.thomasp.pong.toys.pong.game.LevelManager
+import com.thomasjprice.pong.toys.pong.game.GameState
+import com.thomasjprice.pong.toys.pong.game.LevelManager
 import kotlinx.coroutines.*
 import kotlin.math.roundToInt
 
@@ -59,7 +59,7 @@ class PongGameService : GlyphMatrixService("Pong-Game"), SensorEventListener {
         private const val FRAME_TIME = 1000L / FRAME_RATE
         private const val INITIAL_BALL_SPEED = 0.2f  // Increased from 0.1f
         private const val BOT_PADDLE_START_INDEX = 13  // Center position for bot paddle
-        private const val BOT_PADDLE_OPACITY = 128  // 50% opacity
+        private const val BOT_PADDLE_OPACITY = 1024  // 50% opacity
         private const val BALL_SIZE = 2  // 2x2 pixel ball
         private const val BOT_ERROR_CHANCE = 0.15f  // Reduced from 0.3 for better initial performance
         private const val BOT_REACTION_DELAY_MS = 200L  // Reduced from 200ms for quicker reactions
@@ -700,7 +700,7 @@ class PongGameService : GlyphMatrixService("Pong-Game"), SensorEventListener {
         }
     }
 
-    private fun drawChar(matrix: Array<IntArray>, char: Char, x: Int, y: Int, brightness: Int = 255) {
+    private fun drawChar(matrix: Array<IntArray>, char: Char, x: Int, y: Int, brightness: Int = 2047) {
         val charPattern = FONT_CHARS[char.uppercaseChar()] ?: return
         for (py in 0 until CHAR_HEIGHT) {
             for (px in 0 until CHAR_WIDTH) {
@@ -715,7 +715,7 @@ class PongGameService : GlyphMatrixService("Pong-Game"), SensorEventListener {
         }
     }
 
-    private fun drawText(matrix: Array<IntArray>, text: String, x: Int, y: Int, brightness: Int = 255) {
+    private fun drawText(matrix: Array<IntArray>, text: String, x: Int, y: Int, brightness: Int = 2047) {
         var xPos = x
         text.uppercase().forEach { char ->
             if (xPos < MATRIX_SIZE) {
@@ -754,7 +754,7 @@ class PongGameService : GlyphMatrixService("Pong-Game"), SensorEventListener {
                 val pos = 13 + offset  // Center position
                 if (pos in 0 until paddlePositions.size) {
                     val (x, y) = paddlePositions[pos]
-                    matrix[y][x] = 255
+                    matrix[y][x] = 2047
                 }
             }
 
@@ -776,7 +776,7 @@ class PongGameService : GlyphMatrixService("Pong-Game"), SensorEventListener {
             val ballY = MATRIX_SIZE / 2 - 1
             for (dy in 0 until 2) {
                 for (dx in 0 until 2) {
-                    matrix[ballY + dy][ballX + dx] = 255
+                    matrix[ballY + dy][ballX + dx] = 2047
                 }
             }
 
@@ -804,7 +804,7 @@ class PongGameService : GlyphMatrixService("Pong-Game"), SensorEventListener {
             val pos = pointerIndex + offset
             if (pos in 0 until paddlePositions.size) {
                 val (x, y) = paddlePositions[pos]
-                matrix[y][x] = 255
+                matrix[y][x] = 2047
             }
         }
 
@@ -825,7 +825,7 @@ class PongGameService : GlyphMatrixService("Pong-Game"), SensorEventListener {
                 val x = ballX + offsetX
                 val y = ballY + offsetY
                 if (x in 0 until MATRIX_SIZE && y in 0 until MATRIX_SIZE) {
-                    matrix[y][x] = 255
+                    matrix[y][x] = 2047
                 }
             }
         }

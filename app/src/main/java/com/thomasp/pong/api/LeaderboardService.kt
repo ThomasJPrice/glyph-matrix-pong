@@ -1,12 +1,15 @@
-package com.thomasp.pong.api
+package com.thomasjprice.pong.api
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import kotlin.random.Random
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.UUID
+import java.util.Locale
+import androidx.core.content.edit
 
 class LeaderboardService(context: Context) {
     private val baseUrl = "https://pong-leaderboard-api.vercel.app/"
@@ -16,7 +19,14 @@ class LeaderboardService(context: Context) {
 
     private val api = Retrofit.Builder()
         .baseUrl(baseUrl)
-        .client(OkHttpClient())
+        .client(
+            OkHttpClient.Builder()
+                // Removed API secret header interceptor
+                .addInterceptor(okhttp3.logging.HttpLoggingInterceptor().apply {
+                    level = okhttp3.logging.HttpLoggingInterceptor.Level.HEADERS
+                })
+                .build()
+        )
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(LeaderboardApi::class.java)
@@ -25,23 +35,21 @@ class LeaderboardService(context: Context) {
         var userId = prefs.getString(USER_ID_KEY, null)
         if (userId == null) {
             userId = UUID.randomUUID().toString()
-            prefs.edit().putString(USER_ID_KEY, userId).apply()
+            prefs.edit { putString(USER_ID_KEY, userId) }
         }
         return userId
     }
 
     private fun generateRandomUsername(): String {
-        return "Player${String.format("%04d", Random.nextInt(10000))}"
+        return "Player" + String.format(Locale.US, "%04d", Random.nextInt(10000))
     }
 
     suspend fun ensureUsername(): String {
         var storedUsername = getStoredUsername()
         if (storedUsername == null) {
-            // Try up to 10 times to find an available username
-            for (attempt in 1..10) {
+            repeat(10) {
                 val newUsername = generateRandomUsername()
                 if (checkUsernameAvailability(newUsername).getOrNull() == true) {
-                    // Username is available, try to set it
                     val result = setUsername(newUsername)
                     if (result.isSuccess) {
                         storedUsername = newUsername
@@ -50,12 +58,10 @@ class LeaderboardService(context: Context) {
                 }
             }
             // If we still don't have a username after 10 attempts, use user ID as fallback
-            if (storedUsername == null) {
-                val fallbackUsername = "Player${getUserId().take(4)}"
-                val result = setUsername(fallbackUsername)
-                if (result.isSuccess) {
-                    storedUsername = fallbackUsername
-                }
+            val fallbackUsername = "Player" + getUserId().take(4)
+            val result = setUsername(fallbackUsername)
+            if (result.isSuccess) {
+                storedUsername = fallbackUsername
             }
         }
         return storedUsername ?: "Unknown"
@@ -66,7 +72,7 @@ class LeaderboardService(context: Context) {
     }
 
     private fun storeUsername(username: String) {
-        prefs.edit().putString(USERNAME_KEY, username).apply()
+        prefs.edit { putString(USERNAME_KEY, username) }
     }
 
     suspend fun checkUsernameAvailability(username: String): Result<Boolean> {

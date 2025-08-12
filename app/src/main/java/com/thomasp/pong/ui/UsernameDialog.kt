@@ -1,4 +1,4 @@
-                               package com.thomasp.pong.ui
+                               package com.thomasjprice.pong.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
