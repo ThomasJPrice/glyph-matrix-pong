@@ -2,5 +2,5 @@
     <string name="app_name">Pong for the Glyph Matrix</string>
 
     <string name="toy_name_pong">Pong</string>
-    <string name="toy_summary_pong">A Pong-style game, reinvented for the Nothing Phone (3)\'s Glyph Matrix that uses the phone\'s gyroscope for paddle control.</string>
+    <string name="toy_summary_pong">Unwind with a classic arcade game: Pong. Wait, my paddle is orbiting the glyph matrix?</string>
 </resources>

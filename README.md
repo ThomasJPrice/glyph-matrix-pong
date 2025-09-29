@@ -1,95 +1,62 @@
-Glyph Matrix Example Project
-====================
+# Pong for the Glyph Matrix
 
-About the Demo
---------------
-This example project contains multiple toy demos:
-- `basic` demo which shows the application icon
-    - `Touch-down` (press down) to increment and display a counter
-    - `Touch-up` (release) to stop incrementing the counter
-- `glyphbutton` demo which shows a randomly populated grid
-    - `Long-press` the `Glyph Button` on the device to generate a new random grid
-- `animation` demo which shows an indefinite animation until the toy is deactivated
+![Logo](./assets/logo.png)
 
-After going through the `Setup` stage in this document the demo project can be run on the device.
-> Tip: `Short-press` the `Glyph Button` to navigate between the toys.
+---
 
-The demo project already contains the necessary libraries (GlyphMatrix SDK) and source structure as an example. However, if you want to install libraries for your own application, please reference the [**SDK documentation**](https://github.com/KenFeng04/GlyphMatrix-Development-Kit).
+## About the Game
+Pong for the Glyph Matrix is a modern twist on the classic retro game, designed to run entirely on the Nothing Phone (3)’s unique Glyph Matrix.  
+The paddle follows the circular Glyph display while the ball bounces around.
 
-This demo is written in Kotlin, it also utilize  a useful Kotlin wrapper `GlyphMatrixService.kt`，wrap around the original SDK that you can use in your own project.
+The game features:
+- Smooth paddle control using motion sensors
+- A bot opponent with increasing difficulty
+- High score tracking so you can show off your best runs, with a competitive leaderboard.
+- Haptic + sound feedback for extra immersion
 
+---
 
+## The Nothing Phone (3) and the Glyph Matrix
+The Nothing Phone (3) is the first device to include the **Glyph Matrix**, a 25×25 LED grid on the back of the phone.  
+There are small apps called "toys" which can be playable games, device information or anything you like really.
 
-https://github.com/user-attachments/assets/4dbaf7d1-fed0-4a1e-a0eb-38d9cbde046e
+---
 
+## Why I Made This
+I built this game during a **week-long internship at Nothing**.  
+My task was to design and prototype a “Glyph Toy” - something fun, simple, and interactive that made the most of the hardware.
 
+The idea of bringing Pong to the Glyph Matrix stuck with me straight away, and after lots of trial and error (and some dodgy paddle physics), it came together into something I’m genuinely proud of.
 
-Requirements
---------------
-Android Studio, Kotlin, compatible device with Glyph Matrix
+The Nothing team gave me **really positive feedback**, which made the week even better.
 
-Setup
------------------------
-**1.** Prepare your Nothing device and connect it to the computer for development
+---
 
-**2.** Clone this project or download this repository as a ZIP and uncompress it to your local directory.
+## How to Install
+1. Download the latest `.apk` from the [Releases](./releases) section.
+2. Transfer it to your Nothing Phone (3).
+3. On your phone, enable **Install unknown apps** (Settings -> Apps & notifications -> Special app access).
+4. Open the APK and install.
+5. Once installed, you’ll see **Pong** appear in the Glyph Settings -> Glyph Toys section.
 
-**3.** Open a new windows in Android studio and hit file on the menu bar, select open.
+---
 
-<p align="center">
-<img src="images/open.png" alt="Open Project" style="max-height: 300px;">
-</p>
+## Screenshots
+**In Glyph Settings:**  
+![Glyph Settings](./assets/glyph-settings.png)
 
-**4.** Select the directory where you have cloned the repository or the unzipped folder and click `Open`
+**Home Page:**  
+![Home Page](./assets/homepage.png)
 
-<p align="center">
-<img src="images/select.png" alt="Select Project" style="max-height: 300px;">
-</p>
+---
 
-**5.** Once the Gradle files have been synced and your phone is connected properly, you should see your device name shown at the top and a play button. Click the play button to install this example project.
+## Animation
+Here's the animation used to demo the toy:  
+[Lottie Animation](./assets/animation.json)
 
-<p align="center">
-<img src="images/run.png" alt="Run Project" style="max-height: 300px;">
-</p>
+---
 
-Running a Toy
-------------
-When the example project is installed on the device, toys within the project needs to be acivated before it can be used.
-
-<table>
-<tr>
-<td width="60%" valign="top">
-
-**1.** Open the `Glyph Interface` from your device settigns.
-
-**2.** Tap on the first button on the right menu to move toys to the enabled state.
-
-</td>
-<td width="40%" align="center">
-<img src="images/toy_carousoul.png" alt="Disabled Toys" style="max-height: 300px;">
-</td>
-</tr>
-
-<tr>
-<td width="60%" valign="top">
-
-**3.** Use the handle bars to drag a toy from `Disabled` to `Active` state.
-
-</td>
-<td width="40%" align="center">
-<img src="images/toy_disable.png" alt="Moving Toys" style="max-height: 300px;">
-</td>
-</tr>
-
-<tr>
-<td width="60%" valign="top">
-
-**4.** The toys should now be in the `Active` state, and can be viewed on the Glyph Matrix using Glyph Touch.
-
-</td>
-<td width="40%" align="center">
-<img src="images/toy_active.png" alt="Active Toys" style="max-height: 300px;">
-</td>
-</tr>
-</table>
-
+## Credits
+Created during my Nothing internship in 2025.  
+Built with Kotlin, the Glyph Matrix SDK, and a bit of GitHub Copilot.  
+Huge thanks to Nothing for the opportunity, and to [Ken Feng](https://github.com/KenFeng001) for all your help and for developing the SDK.

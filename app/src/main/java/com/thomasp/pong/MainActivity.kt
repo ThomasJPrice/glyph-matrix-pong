@@ -32,8 +32,12 @@ import com.thomasjprice.pong.data.UserPreferences
 import com.thomasjprice.pong.ui.LeaderboardScreen
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import androidx.compose.ui.platform.LocalContext
 
 class MainActivity : ComponentActivity() {
+    companion object {
+        lateinit var pongSettingsPrefs: com.thomasjprice.pong.data.PongSettingsPrefs
+    }
     private lateinit var leaderboardService: LeaderboardService
     private lateinit var userPreferences: UserPreferences
     private val mainScope = MainScope()
@@ -42,7 +46,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         leaderboardService = LeaderboardService(this)
         userPreferences = UserPreferences(this)
+        pongSettingsPrefs = com.thomasjprice.pong.data.PongSettingsPrefs(this)
         enableEdgeToEdge()
+
+        // Load persisted settings
+        PongSettings.soundEnabled = pongSettingsPrefs.isSoundEnabled()
+        PongSettings.hapticEnabled = pongSettingsPrefs.isHapticEnabled()
 
         // Initialize username in background (no dialog, no loading screen)
         mainScope.launch {
@@ -114,6 +123,9 @@ fun MainScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
+            val context = LocalContext.current
+            val prefs = com.thomasjprice.pong.data.PongSettingsPrefs(context)
+
             // Title
             Text(
                 text = "Pong",
@@ -159,7 +171,10 @@ fun MainScreen(
                         )
                         Switch(
                             checked = PongSettings.soundEnabled,
-                            onCheckedChange = { PongSettings.soundEnabled = it }
+                            onCheckedChange = {
+                                PongSettings.soundEnabled = it
+                                prefs.setSoundEnabled(it)
+                            }
                         )
                     }
 
@@ -182,7 +197,10 @@ fun MainScreen(
                         )
                         Switch(
                             checked = PongSettings.hapticEnabled,
-                            onCheckedChange = { PongSettings.hapticEnabled = it }
+                            onCheckedChange = {
+                                PongSettings.hapticEnabled = it
+                                prefs.setHapticEnabled(it)
+                            }
                         )
                     }
                 }
